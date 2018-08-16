@@ -2,17 +2,20 @@
 
 This is a little exercise to help us understand a little more about your skills and how you work. 
 
-- Clone the repository, and create a branch with your work, and make a pull request once done.
+* Clone the repository, and create a branch with your work, and make a pull request once done.
 
-- Inspect the codebase and get familiar with the unit tests as they explain what the product does.
+* Inspect the codebase and get familiar with the unit tests as they explain what the product does.
 
-- It is a minimalist shopping cart order service that only accepts two functions: posting a new order,
-which immediately completes the order, and getting an order, which allows you to see the status of
-orders.
+* This minimalist shopping cart order service that only accepts two functions
+  * Posting a new order, which immediately completes the order
+  * And getting an order, which allows you to see the status of orders.
 
-- Keep your code clean and maintain good documentation as these will also be evaluated as part of the assignment.
+* Some automated test cases have already been stubbed out in the /test/java directory. Add more where needed.
 
-- Some automated test cases have already been stubbed out in the /test/java directory. Feel free to add more as you find necessary.
+## What we're looking for
+* Clean code
+* Unit tests
+* Updated documentation
 
 ## Assignments
 
@@ -32,7 +35,10 @@ orders.
                             +-----------------------+
 
 Assignment 1: Complete the purchase (GET and POST) functionality on PurchaseWebAPI.java
+You'll have to replace the dummy implementation PurchaseWebAPI and OrderService.
 What are the pros and cons of your approach? Do you have design suggestions? 
+
+You can put your notes right here in the README.md file.
 
 - An order should consist of a delivery address (just a street name is sufficient), 
 a payment method (a single text field to capture how payment will take place is also sufficient),
@@ -40,10 +46,11 @@ a shopping cart (which includes a single item and with a name, quantity, and uni
 and an order total price.
 
 Assignment 2: Add idempotency support to the purchase functionality. 
-As a business rule, if someone orders the same items within 3 seconds we consider it a
-duplicate order and should not be adding a new order, but rather return the current one.
+As a business rule, if someone orders the same items within 3 seconds, we consider it a
+duplicate order and should not be added as a new order, but rather return the current one.
 Again, what are the pros and cons of your approach? Do you have design suggestions?
 
+You can put your notes right here in the README.md file.
 
 ## Please note
 
