@@ -10,6 +10,10 @@ public class ShoppingCartService {
         this.shoppingCartDao = shoppingCartDao;
     }
 
+    public ShoppingCart add(ShoppingCart shoppingCart) {
+         return shoppingCartDao.save(shoppingCart);
+    }
+
     public void foo() {
         System.out.println("hello from ShoppingCartService");
     }

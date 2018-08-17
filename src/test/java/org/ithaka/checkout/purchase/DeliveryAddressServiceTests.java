@@ -17,6 +17,12 @@ public class DeliveryAddressServiceTests {
     @Autowired
     private DeliveryAddressService deliveryAddressService;
 
+    @Autowired
+    private OrderService orderService;
+
+    @Autowired
+    private OrderDao orderDao;
+
     @Before
     public void init() {
         deliveryAddressService.deleteAll();
@@ -26,9 +32,7 @@ public class DeliveryAddressServiceTests {
     @Test
     public void should_be_able_to_have_2_addresses() {
         DeliveryAddress deliveryAddress1 =
-                deliveryAddressService.add(
-                        new DeliveryAddress()
-                                .setStreet("1 main st"));
+                deliveryAddressService.add(new DeliveryAddress().setStreet("1 main st"));
         DeliveryAddress deliveryAddress2 =
                 deliveryAddressService.add(
                         new DeliveryAddress()
@@ -42,5 +46,31 @@ public class DeliveryAddressServiceTests {
         assertEquals(deliveryAddress1, actual1.get());
         assertEquals(deliveryAddress2, actual2.get());
         assertNotEquals(deliveryAddress1, actual2.get());
+    }
+
+    @Test
+    public void should_get_max() {
+        Order order = createTestOrder();
+        orderService.saveOrder(order);
+        long id = orderDao.getMaxId();
+        assertEquals(id, 0);
+    }
+
+    @Test
+    public void should_save_order() {
+        Order order = createTestOrder();
+        orderService.saveOrder(order);
+    }
+
+    public Order createTestOrder(){
+        Order order = new Order();
+        order.setDeliveryAddress(new DeliveryAddress().setStreet("1 main st"));
+        order.setPaymentMethod(new PaymentMethod("visa"));
+        ShoppingCart cart = new ShoppingCart();
+        cart.setItem("cherrios");
+        cart.setPrice(new Float(2));
+        cart.setQuantity(2);
+        order.setShoppingCart(cart);
+        return order;
     }
 }

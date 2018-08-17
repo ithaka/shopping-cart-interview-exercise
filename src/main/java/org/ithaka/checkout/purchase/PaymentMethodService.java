@@ -13,4 +13,8 @@ public class PaymentMethodService {
     public PaymentMethod createPayment(PaymentMethod paymentMethod) {
         return paymentMethodDao.save(paymentMethod);
     }
+
+    public PaymentMethod add(PaymentMethod paymentMethod) {
+        return paymentMethodDao.save(paymentMethod);
+    }
 }

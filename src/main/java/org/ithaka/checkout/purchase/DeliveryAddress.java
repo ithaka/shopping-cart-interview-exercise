@@ -7,6 +7,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import java.util.List;
 
 @Accessors(chain = true)
 @Data
@@ -33,5 +34,15 @@ public class DeliveryAddress {
         int result = id != null ? id.hashCode() : 0;
         result = 31 * result + (street != null ? street.hashCode() : 0);
         return result;
+    }
+
+    public DeliveryAddress setStreet(String street) {
+        DeliveryAddress deliveryAddress = new DeliveryAddress();
+        deliveryAddress.setStreet(street);
+        return deliveryAddress;
+    }
+
+    public Long getId() {
+        return id;
     }
 }
