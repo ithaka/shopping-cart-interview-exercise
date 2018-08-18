@@ -1,12 +1,11 @@
 package org.ithaka.checkout.purchase;
 
-import org.springframework.stereotype.Component;
-
+import org.springframework.stereotype.Service;
 import java.sql.Timestamp;
 import java.util.Date;
 import java.util.Optional;
 
-@Component
+@Service
 public class OrderService {
     private DeliveryAddressService deliveryService;
     private PaymentMethodService paymentMethodService;
@@ -35,29 +34,30 @@ public class OrderService {
     }
 
     public String postOrder(Order order) {
-        //set this at the beginning to compare later
+        //set this at the beginning to compare later to most recent transaction
         order = setTimeOfOrder(order);
         //null check the values to make sure the order is complete before we post
-        if(order.getDeliveryAddress() != null && order.getPaymentMethod() != null && order.getShoppingCart() != null){
-            Optional<Order> previousOrder = orderDao.findById(orderDao.getMaxId());
-            if(previousOrder.isPresent()) {
-                Order possibleDuplicateOrder = previousOrder.get();
-                long secondsBetween = (order.getOrderDate().getTime() - possibleDuplicateOrder.getOrderDate().getTime()) / 1000;
-                if (!previousOrder.equals(order) && secondsBetween > 3) {
-                    saveOrder(order);
-                    return "Saved Successfully";
-                }
-                else{
-                    return "Could not complete, Duplicate Transaction";
-                }
-            }
-            else{
+        if(order.getDeliveryAddress() == null && order.getPaymentMethod() == null && order.getShoppingCart() == null) {
+            return "Missing Values, Save Aborted";
+        }
+        String message = shoppingCartService.checkShoppingCartItems(order);
+        //if we do not a success message of 1, guard statement for readability
+        if(!message.equals("1")) {
+            return message;
+        }
+        Optional<Order> previousOrder = orderDao.findById(orderDao.getMaxId());
+        if (previousOrder.isPresent()) {
+            Order possibleDuplicateOrder = previousOrder.get();
+            long secondsBetween = (order.getOrderDate().getTime() - possibleDuplicateOrder.getOrderDate().getTime()) / 1000;
+            if (!previousOrder.equals(order) && secondsBetween > 3) {
                 saveOrder(order);
                 return "Saved Successfully";
+            } else {
+                return "Could not complete, Duplicate Transaction";
             }
-        }
-        else{
-            return "Missing Values, Save Aborted";
+        } else {
+            saveOrder(order);
+            return "Saved Successfully";
         }
     }
 

@@ -2,12 +2,10 @@ package org.ithaka.checkout.purchase;
 
 import lombok.Data;
 import lombok.experimental.Accessors;
-
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import java.util.List;
 
 @Accessors(chain = true)
 @Data
@@ -36,13 +34,11 @@ public class DeliveryAddress {
         return result;
     }
 
-    public DeliveryAddress setStreet(String street) {
-        DeliveryAddress deliveryAddress = new DeliveryAddress();
-        deliveryAddress.setStreet(street);
-        return deliveryAddress;
-    }
-
     public Long getId() {
         return id;
+    }
+
+    public void setStreet(String street) {
+        this.street = street;
     }
 }

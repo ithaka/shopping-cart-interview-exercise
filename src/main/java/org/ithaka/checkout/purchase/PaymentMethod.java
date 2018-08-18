@@ -17,23 +17,11 @@ public class PaymentMethod {
     private Long id;
     private String method;
 
-    public PaymentMethod(String method){
-        this.method = method;
-    }
-
     public String getMethod() {
         return method;
     }
 
     public void setMethod(String method) {
         this.method = method;
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
     }
 }

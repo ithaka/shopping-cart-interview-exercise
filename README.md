@@ -67,3 +67,15 @@ to get going.
 
 - Everything runs in a h2 in-memory database so everytime you start the product, you have a fresh db.
 
+
+##Brandons Notes
+To handle a duplicate order I have changed hibernate to auto update depending on the class structure. With this I was able to create a timestamp
+column that throws a stamp when the order is first generated. I can then pull the timestamp from the most recent order by Max ID (using @Query annotation). (the most recent order should be the one with the highest id in the db.) I then can 
+compare the timestamps of the order I'm testing and the order thats already in the db to see if they are within 3 seconds.
+### Pros and Cons to duplicate order approach
+- Con - would be that if the most recent order did not have the highest ID number. (Shouldnt happen tho)
+- Pro - this is a very fast approach to solve the issue since I'm doing a custom hibernate query
+- Pro -  the code is very easy to understand and it is very readable for maintence
+
+- i initially recieved a list of all orders then checked the timestamp based on this. If orders
+became a huge size then this operation would be a horrible way to do things so instead I let a query take care of it

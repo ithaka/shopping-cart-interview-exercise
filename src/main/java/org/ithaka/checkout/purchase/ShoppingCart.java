@@ -18,6 +18,7 @@ public class ShoppingCart {
     private String item;
     private Integer quantity;
     private Float price;
+    private Float totalPrice;
 
     public Integer getQuantity() {
         return quantity;
@@ -49,5 +50,13 @@ public class ShoppingCart {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public Float getTotalPrice() {
+        return totalPrice;
+    }
+
+    public void setTotalPrice(Float totalPrice) {
+        this.totalPrice = totalPrice;
     }
 }
