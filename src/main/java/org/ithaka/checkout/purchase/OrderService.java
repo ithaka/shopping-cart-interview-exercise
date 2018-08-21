@@ -40,11 +40,18 @@ public class OrderService {
         if(order.getDeliveryAddress() == null && order.getPaymentMethod() == null && order.getShoppingCart() == null) {
             return "Missing Values, Save Aborted";
         }
-        String message = shoppingCartService.checkShoppingCartItems(order);
-        //if we do not a success message of 1, guard statement for readability
-        if(!message.equals("1")) {
-            return message;
+        //return a message saying there are null items in the order and dont allow the post
+        if(shoppingCartService.checkForNullItems(order)) {
+            return "There are null items in the shopping cart";
         }
+
+        /*
+        I dont know if you want the entire thing built out but if this was a real world situation,
+        it would be wise to hold the user id in the order, and we would also post the order by user id,
+        i would then create a method in the interface of orderDao to findByIdAndUserId that would return the order
+        instead of a optional... below is what it would look like instead here
+        Order previousOrder = orderDao.findByIdAndUserId(orderDao.getMaxId(), order.getUserId);
+         */
         Optional<Order> previousOrder = orderDao.findById(orderDao.getMaxId());
         if (previousOrder.isPresent()) {
             Order possibleDuplicateOrder = previousOrder.get();

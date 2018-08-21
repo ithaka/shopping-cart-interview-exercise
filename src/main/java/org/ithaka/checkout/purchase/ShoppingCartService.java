@@ -15,16 +15,16 @@ public class ShoppingCartService {
     }
 
     //method to null check that the shopping cart contains all needed items for the transaction
-    public String checkShoppingCartItems(Order order){
+    public Boolean checkForNullItems(Order order){
         if (order.getShoppingCart().getItem() == null){
-            return "Shopping Cart Missing Item";
+            return true;
         }
         else if (order.getShoppingCart().getPrice() == null){
-            return "Shopping Cart Missing Item Price";
+            return true;
         }
         else if (order.getShoppingCart().getQuantity() == null){
-            return "Shopping Cart Missing Quantity";
+            return true;
         }
-        return "1";
+        return false;
     }
 }
