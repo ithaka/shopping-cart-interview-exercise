@@ -25,6 +25,9 @@ public class ShoppingCartService {
         else if (order.getShoppingCart().getQuantity() == null){
             return true;
         }
+        else if (order.getUserId() == null){
+            return true;
+        }
         return false;
     }
 }

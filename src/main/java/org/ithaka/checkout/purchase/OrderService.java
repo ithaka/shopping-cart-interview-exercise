@@ -45,17 +45,9 @@ public class OrderService {
             return "There are null items in the shopping cart";
         }
 
-        /*
-        I dont know if you want the entire thing built out but if this was a real world situation,
-        it would be wise to hold the user id in the order, and we would also post the order by user id,
-        i would then create a method in the interface of orderDao to findByIdAndUserId that would return the order
-        instead of a optional... below is what it would look like instead here
-        Order previousOrder = orderDao.findByIdAndUserId(orderDao.getMaxId(), order.getUserId);
-         */
-        Optional<Order> previousOrder = orderDao.findById(orderDao.getMaxId());
-        if (previousOrder.isPresent()) {
-            Order possibleDuplicateOrder = previousOrder.get();
-            long secondsBetween = (order.getOrderDate().getTime() - possibleDuplicateOrder.getOrderDate().getTime()) / 1000;
+        Order previousOrder = orderDao.getMostRecentOrderByUserId(order.getUserId());
+        if (previousOrder != null) {
+            long secondsBetween = (order.getOrderDate().getTime() - previousOrder.getOrderDate().getTime()) / 1000;
             if (!previousOrder.equals(order) && secondsBetween > 3) {
                 saveOrder(order);
                 return "Saved Successfully";

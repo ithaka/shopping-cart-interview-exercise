@@ -2,6 +2,7 @@ package org.ithaka.checkout.purchase;
 
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
+import org.springframework.data.repository.query.Param;
 
 import java.util.List;
 
@@ -12,9 +13,9 @@ public interface OrderDao extends CrudRepository<Order, Long> {
 
     List<Order> findAll();
 
-    /*
-    since user id is not in the order entity and we dont have a users db the below method
-    will not work. If you want me to build this out I can.
-    List<Order> findByIdAndUserId(String id, String userId);
-     */
+    //Returns most recent order, max id and user id
+    Order findByIdAndUserId(Long id, Long userId);
+
+    @Query("SELECT coalesce(max(ch.id), 0) FROM Order ch where ch.userId = :id")
+    Order getMostRecentOrderByUserId(@Param("id") Long id);
 }
