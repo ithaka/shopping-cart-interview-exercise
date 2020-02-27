@@ -6,16 +6,16 @@ import java.util.Optional;
 
 @Component
 public class OrderService {
-    private DeliveryAddressService deliveryService;
+    private EmailAddressService emailAddressService;
+    private OrderDao orderDao;
     private PaymentMethodService paymentMethodService;
     private ShoppingCartService shoppingCartService;
-    private OrderDao orderDao;
 
-    public OrderService(DeliveryAddressService deliveryService,
-                        PaymentMethodService paymentMethodService,
+    public OrderService(EmailAddressService emailAddressService,
                         OrderDao orderDao,
+                        PaymentMethodService paymentMethodService,
                         ShoppingCartService shoppingCartService) {
-        this.deliveryService = deliveryService;
+        this.emailAddressService = emailAddressService;
         this.paymentMethodService = paymentMethodService;
         this.shoppingCartService = shoppingCartService;
     }

@@ -19,7 +19,7 @@ public class Order {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     @OneToOne
-    private DeliveryAddress deliveryAddress;
+    private EmailAddress emailAddress;
     @OneToOne
     private PaymentMethod paymentMethod;
     @OneToOne
